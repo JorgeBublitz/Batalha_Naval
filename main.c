@@ -3,8 +3,15 @@
 #include <time.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <windows.h>
 #include <ctype.h>
+#include <string.h>
+
+/* Limpa o terminal no Windows (cls) e no Linux/macOS (clear) */
+#ifdef _WIN32
+#define limparTela() system("cls")
+#else
+#define limparTela() system("clear")
+#endif
 
 #define RED   "\x1B[31m"
 #define BLU   "\x1B[34m"
@@ -12,7 +19,7 @@
 #define YEL   "\x1B[33m"
 #define RESET "\x1B[0m"
 
-void iniciarTabuleiroPersonalizadoMult(int tabuleiroPersonalizado[][10], int qL, int qC) {
+void iniciarTabuleiroPersonalizadoMult(int tabuleiroPersonalizado[][15], int qL, int qC) {
     int linha, coluna;
     for (linha = 0; linha < qL; linha++) {
         for (coluna = 0; coluna < qC; coluna++) {
@@ -21,7 +28,7 @@ void iniciarTabuleiroPersonalizadoMult(int tabuleiroPersonalizado[][10], int qL,
     }
 }
 
-void iniciarShotPersonalizado(int shotPersonalizado[][10], int qL, int qC) {
+void iniciarShotPersonalizado(int shotPersonalizado[][15], int qL, int qC) {
     int linha, coluna;
     for (linha = 0; linha < qL; linha++) {
         for (coluna = 0; coluna < qC; coluna++) {
@@ -30,7 +37,7 @@ void iniciarShotPersonalizado(int shotPersonalizado[][10], int qL, int qC) {
     }
 }
 
-void mostraTabuleiroPersonalizadoMult(int tabuleiroPersonalizado[][10], int tabuleiroPersonalizado2[][10], int qL, int qC) {
+void mostraTabuleiroPersonalizadoMult(int tabuleiroPersonalizado[][15], int tabuleiroPersonalizado2[][15], int qL, int qC) {
     int linha, coluna;
     printf("\n\t\t\tBATALHA "YEL "NAVAL\n\n" RESET);
     printf("          ");
@@ -97,13 +104,13 @@ void iniciaNaviosPersonalizadoMult(int navios[][2], int player, int qL, int qC) 
         printf("|| Linha (1 - %d): ", qL);
 
         char linhaInput[10];
-        scanf("%s", linhaInput);
+        scanf("%9s", linhaInput);
 
         // Verifica se o input contém apenas dígitos
         if (!isdigit(linhaInput[0])) {
             printf("Entrada invalida. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -113,7 +120,7 @@ void iniciaNaviosPersonalizadoMult(int navios[][2], int player, int qL, int qC) 
         if (linha < 1 || linha > qL) {
             printf("Numero de linha invalido. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -122,13 +129,13 @@ void iniciaNaviosPersonalizadoMult(int navios[][2], int player, int qL, int qC) 
         printf("|| Coluna (1 - %d): ", qC);
 
         char colunaInput[10];
-        scanf("%s", colunaInput);
+        scanf("%9s", colunaInput);
 
         // Verifica se o input contém apenas dígitos
         if (!isdigit(colunaInput[0])) {
             printf("Entrada invalida. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -138,7 +145,7 @@ void iniciaNaviosPersonalizadoMult(int navios[][2], int player, int qL, int qC) 
         if (coluna < 1 || coluna > qC) {
             printf("Numero de coluna invalido. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -154,17 +161,17 @@ void iniciaNaviosPersonalizadoMult(int navios[][2], int player, int qL, int qC) 
         if (coordenadasRepetidas == 1) {
             printf("Coordenadas já foram usadas. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
 
         sleep(2);
-        system("cls");
+        limparTela();
     }
 }
 
-void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonalizado[][10], int tabuleiroPersonalizado2[][10], int score, int score2, int shotPersonalizado[][10], int shotPersonalizado2[][10], int qL, int qC, int player) {
+void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonalizado[][15], int tabuleiroPersonalizado2[][15], int score, int score2, int shotPersonalizado[][15], int shotPersonalizado2[][15], int qL, int qC, int player) {
     int foi = 0;
 
     while (foi == 0) {
@@ -173,13 +180,13 @@ void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonaliza
         printf("\nLinha: ");
 
         char linhaInput[10];
-        scanf("%s", linhaInput);
+        scanf("%9s", linhaInput);
 
         // Verifica se o input contém apenas dígitos
         if (!isdigit(linhaInput[0])) {
             printf("Entrada invalida. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -188,7 +195,7 @@ void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonaliza
         if (tiroPersonalizado[0] < 1 || tiroPersonalizado[0] > qL) {
             printf("Numero invalido. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -197,13 +204,13 @@ void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonaliza
         printf("Coluna: ");
 
         char colunaInput[10];
-        scanf("%s", colunaInput);
+        scanf("%9s", colunaInput);
 
         // Verifica se o input contém apenas dígitos
         if (!isdigit(colunaInput[0])) {
             printf("Entrada invalida. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -212,7 +219,7 @@ void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonaliza
         if (tiroPersonalizado[1] < 1 || tiroPersonalizado[1] > qC) {
             printf("Numero invalido. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -222,7 +229,7 @@ void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonaliza
             if (shotPersonalizado[tiroPersonalizado[0]][tiroPersonalizado[1]] == 0) {
                 printf("Já atirou aqui. \n");
                 sleep(2);
-                system("cls");
+                limparTela();
                 continue;
             }
             foi = 1;
@@ -230,7 +237,7 @@ void darTiroPersonalizadoMult(int tiroPersonalizado[2], int tabuleiroPersonaliza
             if (shotPersonalizado2[tiroPersonalizado[0]][tiroPersonalizado[1]] == 0) {
                 printf("Já atirou aqui. \n");
                 sleep(2);
-                system("cls");
+                limparTela();
                 continue;
             }
             foi = 1;
@@ -282,8 +289,8 @@ int acertouPersonalizadoMult(int tiroPersonalizado[2], int naviosPersonalizado[]
     return acerto;
 }
 
-void alteraTabuleiroPersonalizadoMult(int tiroPersonalizado[2], int naviosPersonalizado[][2],int naviosPersonalizado2[][2], int tabuleiroPersonalizado[][10], int tabuleiroPersonalizado2[][10], int player, int *score, int *score2, int *acertos1, int *acertos2) {
-    if (acertouPersonalizado(tiroPersonalizado, naviosPersonalizado, naviosPersonalizado2, player)) {
+void alteraTabuleiroPersonalizadoMult(int tiroPersonalizado[2], int naviosPersonalizado[][2],int naviosPersonalizado2[][2], int tabuleiroPersonalizado[][15], int tabuleiroPersonalizado2[][15], int player, int *score, int *score2, int *acertos1, int *acertos2) {
+    if (acertouPersonalizadoMult(tiroPersonalizado, naviosPersonalizado, naviosPersonalizado2, player)) {
         if (player == 2) {
             tabuleiroPersonalizado2[tiroPersonalizado[0]][tiroPersonalizado[1]] = 1;
             *score2 += 100;
@@ -384,11 +391,11 @@ void iniciaNaviosPersonalizado(int navios[][2], int qL, int qC) {
 void darTiroPersonalizado(int tiroPersonalizado[2], int shotPersonalizado[][15], int tabuleiroPersonalizado[][15], int naviosPersonalizado[][2], int qL, int qC) {
     int foi = 0, i;
     while (foi == 0) {
-        system("cls");
+        limparTela();
         mostraTabuleiroPersonalizado(tabuleiroPersonalizado, qL, qC);
         printf("Linha: ");
         char linhaInput[10];
-        scanf("%s", linhaInput);
+        scanf("%9s", linhaInput);
 
         // Verifica se o input é "777"
         if (strcmp(linhaInput, "777") == 0) {
@@ -403,7 +410,7 @@ void darTiroPersonalizado(int tiroPersonalizado[2], int shotPersonalizado[][15],
         if (!isdigit(linhaInput[0])) {
             printf("Entrada " RED "INVALIDA" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -412,7 +419,7 @@ void darTiroPersonalizado(int tiroPersonalizado[2], int shotPersonalizado[][15],
         if (tiroPersonalizado[0] < 1 || tiroPersonalizado[0] > qL) {
             printf("Numero " RED "INVALIDO" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -420,13 +427,13 @@ void darTiroPersonalizado(int tiroPersonalizado[2], int shotPersonalizado[][15],
 
         printf("Coluna: ");
         char colunaInput[10];
-        scanf("%s", colunaInput);
+        scanf("%9s", colunaInput);
 
         // Verifica se o input contém apenas dígitos
         if (!isdigit(colunaInput[0])) {
             printf("Entrada " RED "INVALIDA" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -435,7 +442,7 @@ void darTiroPersonalizado(int tiroPersonalizado[2], int shotPersonalizado[][15],
         if (tiroPersonalizado[1] < 1 || tiroPersonalizado[1] > qC) {
             printf("Numero " RED "INVALIDO" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -445,7 +452,7 @@ void darTiroPersonalizado(int tiroPersonalizado[2], int shotPersonalizado[][15],
             // Já atirou aqui
             printf("Ja atirou aqui.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -566,11 +573,11 @@ void iniciaNavios(int navios[][2], int player) {
     for (navio = 0; navio < 3; navio++) {
         coordenadasRepetidas = 0;
         char linhaInput[10], colunaInput[10];
-        system("cls");
+        limparTela();
 		printf("\n\t\t\tBATALHA "YEL "NAVAL\n\n" RESET);
         printf("|| Localização do navio %d do Player %d ||\n", navio+1, player);
         printf("|| Linha (1 - 5): ");
-        scanf("%s", linhaInput);
+        scanf("%9s", linhaInput);
 
         // Verifica se a entrada contém apenas dígitos
         int isLinhaDigit = 1;
@@ -584,7 +591,7 @@ void iniciaNavios(int navios[][2], int player) {
         if (!isLinhaDigit) {
             printf("Entrada inválida. Por favor, insira um número válido.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -594,14 +601,14 @@ void iniciaNavios(int navios[][2], int player) {
         if (linha < 1 || linha > 5) {
             printf("Número de linha " RED "inválido" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
         navios[navio][0] = linha - 1;
 
         printf("|| Coluna (1 - 5): ");
-        scanf("%s", colunaInput);
+        scanf("%9s", colunaInput);
 
         // Verifica se a entrada contém apenas dígitos
         int isColunaDigit = 1;
@@ -615,7 +622,7 @@ void iniciaNavios(int navios[][2], int player) {
         if (!isColunaDigit) {
             printf("Entrada inválida. Por favor, insira um número válido.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -625,7 +632,7 @@ void iniciaNavios(int navios[][2], int player) {
         if (coluna < 1 || coluna > 5) {
             printf("Número de coluna " RED "inválido" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
@@ -641,13 +648,13 @@ void iniciaNavios(int navios[][2], int player) {
         if (coordenadasRepetidas == 1) {
             printf("Coordenadas já foram usadas. Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             navio--;
             continue;
         }
 
         sleep(2);
-        system("cls");
+        limparTela();
     }
 }
 
@@ -675,15 +682,15 @@ void iniciaNaviosSozinho(int navios[][2]){
     }
 }
 
-void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navios[][2], int *tentativas) {
+void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho[][5], int navios[][2], int *tentativas) {
     int foi = 0, i;
 
     while (foi == 0) {
         char linhaInput[10], colunaInput[10];
-		system("cls");
+		limparTela();
 		mostraTabuleiroSozinho(tabuleiroSozinho);
         printf("Linha: ");
-        scanf("%s", linhaInput);
+        scanf("%9s", linhaInput);
 
         // Verifica se a entrada contém apenas dígitos
         int isLinhaDigit = 1;
@@ -697,7 +704,7 @@ void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navio
         if (!isLinhaDigit) {
             printf("Entrada inválida. Por favor, insira um número válido.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -713,13 +720,13 @@ void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navio
 		else if (tiro[0] < 1 || tiro[0] > 5) {
             printf("Número " RED "INVÁLIDO" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
         tiro[0]--;
 
         printf("Coluna: ");
-        scanf("%s", colunaInput);
+        scanf("%9s", colunaInput);
 
         // Verifica se a entrada contém apenas dígitos
         int isColunaDigit = 1;
@@ -733,7 +740,7 @@ void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navio
         if (!isColunaDigit) {
             printf("Entrada inválida. Por favor, insira um número válido.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
 
@@ -742,7 +749,7 @@ void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navio
         if (tiro[1] < 1 || tiro[1] > 5) {
             printf("Número " RED "INVÁLIDO" RESET ". Tente novamente.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
         tiro[1]--;
@@ -751,7 +758,7 @@ void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navio
             // já atirou aqui
             printf("Já atirou aqui.\n");
             sleep(2);
-            system("cls");
+            limparTela();
             continue;
         }
         foi = 1;
@@ -759,18 +766,18 @@ void darTiroSozinho(int tiro[2], int shot1[][5], int tabuleiroSozinho, int navio
 
     shot1[tiro[0]][tiro[1]] = 0;
 }
-void darTiro(int tiro[2], int player, int tabuleiro, int tabuleiro2, int score, int score2, int shot1[][5], int shot2[][5]) {
+void darTiro(int tiro[2], int player, int tabuleiro[][5], int tabuleiro2[][5], int score, int score2, int shot1[][5], int shot2[][5]) {
     int foi = 0, i;
 
     while (foi == 0) {
-        system("cls");
+        limparTela();
         mostraTabuleiro(tabuleiro, tabuleiro2, score, score2);
         printf("\n\nVez do Player %d\n", player);
         
         char linhaInput[10], colunaInput[10];
 
         printf("Linha: ");
-        scanf("%s", linhaInput);
+        scanf("%9s", linhaInput);
 
         // Verifica se a entrada contém apenas dígitos
         int isLinhaDigit = 1;
@@ -797,7 +804,7 @@ void darTiro(int tiro[2], int player, int tabuleiro, int tabuleiro2, int score, 
         tiro[0]--;
 
         printf("Coluna: ");
-        scanf("%s", colunaInput);
+        scanf("%9s", colunaInput);
 
         // Verifica se a entrada contém apenas dígitos
         int isColunaDigit = 1;
@@ -961,24 +968,22 @@ int main() {
     
     
     
-    printf("\n\t\t\tEm parcerias a " RED "Riot Games" RESET "\n");
-    sleep(1);
-    printf("\t\t\t" RED "GRUPO CADERNO" RESET " apresente...");
+    printf("\n\t\t\t" RED "GRUPO CADERNO" RESET " apresenta...");
     sleep(2);
-    system("cls");
+    limparTela();
     printf("\n\t\t\tJOGO");
     sleep(1);
     printf(" DO ");
     sleep(1);
     printf(YEL "CADERNO" RESET);
     sleep(1);
-    system("cls");
+    limparTela();
     int loop = 1;
     char op1 = ' ', op2 = ' ', op3 = ' ', op4 = ' ', op5 = ' ';
     
 	while (loop == 1) {
 		voltar:
-		system("cls");
+		limparTela();
 		op1 = ' ';
 		printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 		printf("\n\n  1 - BATALHA NAVAL\n  2 - CRÉDITOS\n  3 - REGRAS\n  0 - " RED "SAIR" RESET "\n  ");
@@ -988,17 +993,17 @@ int main() {
 				case '1': //MENU DO JOGO
 					voltar3:
 					while (loop == 1) {
-						system("cls");
+						limparTela();
 						op2 = ' ';
 						printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 						printf("\n\n  1 - UM JOGADOR\n  2 - DOIS JOGADORES\n  3 - MODO PERSONALIZADO\n  0 - "RED"VOLTAR"RESET"\n  ");
 						scanf(" %c", &op2);
 	
 						if (op2 != '1' && op2 != '2' && op2 != '3' && op2 != '0') {
-							system("cls");
+							limparTela();
 							printf(RED "Número Inválido" RESET);
 							sleep(1);
-							system("cls");
+							limparTela();
 							continue;
 						}
 						switch (op2) {
@@ -1007,14 +1012,14 @@ int main() {
 								inicializaShot(shot1);
 								iniciaNaviosSozinho(navios);
 								while (acertos1 != 3){
-									system("cls");
+									limparTela();
 									mostraTabuleiroSozinho(tabuleiroSozinho);
 									darTiroSozinho(tiro, shot1, tabuleiroSozinho, navios, &tentativas);
 									alteraTabuleiroSozinho(tiro, navios, tabuleiroSozinho, &acertos1, &tentativas);
 									tentativas++;
 									sleep(2);
 								}
-								system("cls");
+								limparTela();
 								mostraTabuleiroSozinho(tabuleiroSozinho);
 								tentativas -= 3;
 								printf(YEL "\tPARABENS!!! Vitoria" RESET);
@@ -1026,12 +1031,12 @@ int main() {
 							case '2': //MODO DOIS JOGADORES
 								acertos1 = 0;
 		    					acertos2 = 0;
-		    					system("cls");
+		    					limparTela();
 		    					printf("\n\n\n\t\t\t BATALHA "YEL "NAVAL\n\n" RESET);
 		    					inicializaTabuleiro(tabuleiro);
 		    					inicializaShot(shot1);
 		    					iniciaNavios(navios, player);
-		    					system("cls");
+		    					limparTela();
 		    					printf("\n\n\n\t\t\t BATALHA "YEL "NAVAL\n\n" RESET);
 		    					player = (player == 1) ? 2 : 1;	
 		    					inicializaTabuleiro(tabuleiro2);
@@ -1039,7 +1044,7 @@ int main() {
 		    					iniciaNavios(navios2, player);
 		    					player = (player == 1) ? 2 : 1;
 		    					do {
-		    						system("cls");
+		    						limparTela();
 		    						printf("\n\n\n\t\t\t BATALHA "YEL "NAVAL\n\n" RESET);
 		    						mostraTabuleiro(tabuleiro, tabuleiro2, score, score2);
 		    						darTiro(tiro, player, tabuleiro, tabuleiro2, score, score2, shot1, shot2);
@@ -1047,23 +1052,23 @@ int main() {
 		    						sleep(2);
 		    						player = (player == 1) ? 2 : 1;
 		    						if (acertos1 == 3) {
-		    							system("cls");
+		    							limparTela();
 		    							mostraTabuleiro(tabuleiro, tabuleiro2, score, score2);
 		    							printf("\n\nPlayer 1 venceu!\n");
 		    							printf("Score: "YEL"%d"RESET"\n", score);
 		    							system("pause");
-		    							system("cls");
+		    							limparTela();
 		    							break;
 		    						} else if (acertos2 == 3) {
-		    							system("cls");
+		    							limparTela();
 		    							mostraTabuleiro(tabuleiro, tabuleiro2, score, score2);
 		    							printf("\n\nPlayer 2 venceu!\n");
 		    							printf("Score: "YEL"%d"RESET"\n", score2);
 		    							system("pause");
-		    							system("cls");
+		    							limparTela();
 		    							break;
 		    						}
-		    						system("cls");
+		    						limparTela();
 		    					}while(1);
 		    					score = 100;
 		    					score2 = 100;
@@ -1073,7 +1078,7 @@ int main() {
 		    					break;
 							case '3':  //MENU DO PERSONALIZADO
 								while (loop == 1) {
-									system("cls");
+									limparTela();
 									op2 = ' ';
 									printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 									printf("\n\n  1 - UM JOGADOR\n  2 - DOIS JOGADORES\n  0 - "RED"VOLTAR"RESET"\n  ");
@@ -1085,7 +1090,7 @@ int main() {
 										    qC = 0;
 										    
 			    							do {		
-			    								system("cls");
+			    								limparTela();
 			    								printf("\n\n\n\t\t\t BATALHA "YEL "NAVAL\n\n" RESET);
 												printf("Tamanho do tabuleiro (2 - 15)\n");
 										        printf("Linhas: ");
@@ -1093,7 +1098,7 @@ int main() {
 										            printf("Numero " RED "INVALIDO" RESET ". Tente novamente.\n");
 										            while (getchar() != '\n');  
 										            sleep(2);
-										            system("cls");  
+										            limparTela();  
 										        } else {
 										            break;  
 										        }
@@ -1105,7 +1110,7 @@ int main() {
 										            printf("Numero " RED "INVALIDO" RESET ". Tente novamente.\n");
 										            while (getchar() != '\n');  
 										            sleep(2);
-										            system("cls");  
+										            limparTela();  
 										        } else {
 										            break;  
 										        }
@@ -1115,7 +1120,7 @@ int main() {
 										    inicializaShotPersonalizado(shotPersonalizado, qL, qC);
 										    iniciaNaviosPersonalizado(naviosPersonalizado, qL, qC);	
 										    while (acertosPersonalizado != 3) {
-										        system("cls");
+										        limparTela();
 										        mostraTabuleiroPersonalizado(tabuleiroPersonalizado, qL, qC);
 										        darTiroPersonalizado(tiroPersonalizado, shotPersonalizado, tabuleiroPersonalizado, naviosPersonalizado, qL, qC);
 										        alteraTabuleiroPersonalizado(tiroPersonalizado, naviosPersonalizado, tabuleiroPersonalizado, &acertosPersonalizado);
@@ -1123,7 +1128,7 @@ int main() {
 										        sleep(2);
 										    }
 										
-										    system("cls");
+										    limparTela();
 										    mostraTabuleiroPersonalizado(tabuleiroPersonalizado, qL, qC);
 										    printf(YEL "Vitoria" RESET);
 										    tentativasPersonalizado -= 3;
@@ -1140,13 +1145,13 @@ int main() {
 											qL = 0;
 										    qC = 0;
 										    while (lol == 1) {
-										        system("cls");
+										        limparTela();
 										        printf("\n\n\n\t\t\t BATALHA " YEL "NAVAL\n\n" RESET);
 										        printf("Tamanho do tabuleiro (2 - 10)\n");
 										        printf("Linhas: ");
 										
 										        char linhaInput[10];
-										        scanf("%s", linhaInput);
+										        scanf("%9s", linhaInput);
 										
 										        // Verifica se o input contém apenas dígitos
 										        if (!isdigit(linhaInput[0])) {
@@ -1166,7 +1171,7 @@ int main() {
 										        printf("Colunas: ");
 										
 										        char colunaInput[10];
-										        scanf("%s", colunaInput);
+										        scanf("%9s", colunaInput);
 										
 										        // Verifica se o input contém apenas dígitos
 										        if (!isdigit(colunaInput[0])) {
@@ -1185,37 +1190,37 @@ int main() {
 										
 										        lol = 0;
 										    }
-											system("cls");
+											limparTela();
 											iniciarTabuleiroPersonalizadoMult(tabuleiroPersonalizado, qL, qC);
 										    iniciarShotPersonalizado(shotPersonalizado, qL, qC);
 										    iniciaNaviosPersonalizadoMult(naviosPersonalizado, player, qL, qC);
 										    player = (player == 1) ? 2 : 1;
-										    system("cls");
+										    limparTela();
 										    iniciarTabuleiroPersonalizadoMult(tabuleiroPersonalizado2, qL, qC);
 										    iniciarShotPersonalizado(shotPersonalizado2, qL, qC);
 										    iniciaNaviosPersonalizadoMult(naviosPersonalizado2, player, qL, qC);
 										    player = (player == 1) ? 2 : 1;
-										    system("cls");
+										    limparTela();
 										    do {
 										        darTiroPersonalizadoMult(tiroPersonalizado, tabuleiroPersonalizado, tabuleiroPersonalizado2, score, score2, shotPersonalizado, shotPersonalizado2, qL, qC, player);
 												alteraTabuleiroPersonalizadoMult(tiroPersonalizado, naviosPersonalizado, naviosPersonalizado2, tabuleiroPersonalizado, tabuleiroPersonalizado2, player, &score, &score2, &acertos1, &acertos2);
 												player = (player == 1) ? 2 : 1;
 												if(acertos1 == 3){
-													system("cls");
+													limparTela();
 													mostraTabuleiroPersonalizadoMult(tabuleiroPersonalizado, tabuleiroPersonalizado2, qL, qC);
 													printf("\nPlayer 1 Venceu!\n");
 													sleep(2);
-													system("cls");
+													limparTela();
 													break;
 												} else if(acertos2 == 3){
-													system("cls");
+													limparTela();
 													mostraTabuleiroPersonalizadoMult(tabuleiroPersonalizado, tabuleiroPersonalizado2, qL, qC);
 													printf("\nPlayer 2 Venceu!\n");
 													sleep(2);
-													system("cls");
+													limparTela();
 													break;
 												}
-												system("cls");
+												limparTela();
 										    } while (1);	
 										case '0':
 											op4 = ' ';
@@ -1229,7 +1234,7 @@ int main() {
 					}
 				case '2':  //CREDITOS 
 					voltar2:
-					system("cls");
+					limparTela();
 					printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 					printf("\n\t\t\t" YEL "CRÉDITOS" RESET);
 					sleep(2);	
@@ -1249,7 +1254,7 @@ int main() {
 					sleep(1);
 					printf("   Sim, a que mais escreve errado kk");
 					sleep(2);
-					system("cls");
+					limparTela();
 					printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 					printf("\n\t\t\t" YEL "CRÉDITOS" RESET);	
 					printf("\n\nDesenvolvimento:\n\n");
@@ -1278,7 +1283,7 @@ int main() {
 					if (op3 != '0') {
 						printf(RED "Número Inválido" RESET);
 						sleep(1);
-						system("cls");
+						limparTela();
 						op3 = ' ';
 						goto voltar2;
 					}
@@ -1286,7 +1291,7 @@ int main() {
 					
 				case '3': //REGRAS
 					voltarMenuRegras:
-					system("cls");
+					limparTela();
 					printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 					printf("\n\t\t\t"YEL "REGRAS" RESET);
 					printf("\n\n  1 - MODO SOLITÁRIO\n  2 - DOIS JOGADORES\n  3 - MODO PERSONALIZADO\n  0 - "RED"VOLTAR"RESET"\n  ");
@@ -1294,7 +1299,7 @@ int main() {
 						switch(op5){
 							case '1':
 								voltarRegras1:
-								system("cls");
+								limparTela();
 								printf("\n\t\t\tJOGO DO "YEL "CADERNO" RESET);
 								printf("\n\t\t\t"YEL "REGRAS\n\n" RESET);
 								printf("Batalha Naval - Modo Solitário:\n\n");
@@ -1322,14 +1327,14 @@ int main() {
 								if (op5 != '0') {
 									printf(RED "Número Inválido" RESET);
 									sleep(1);
-									system("cls");
+									limparTela();
 									op3 = ' ';
 									goto voltarRegras1;
 								}
 								goto voltarMenuRegras;
 							case '2':
 								voltarRegras3:
-								system("cls");
+								limparTela();
 								printf("Batalha Naval - Modo Dois Jogadores:\n\n");
 								printf("  Objetivo:\n");
 								printf("Cada jogador tenta afundar os navios do oponente antes de ter seus próprios navios afundados.\n\n");
@@ -1360,14 +1365,14 @@ int main() {
 								if (op5 != '0') {
 									printf(RED "Número Inválido" RESET);
 									sleep(1);
-									system("cls");
+									limparTela();
 									op3 = ' ';
 									goto voltarRegras2;
 								}
 								goto voltarMenuRegras;
 							case '3':
 								voltarRegras2:
-								system("cls");
+								limparTela();
 								printf("Batalha Naval - Modo Personalizado:\n\n");
 								printf("  Objetivo:\n");
 								printf("Os jogadores (ou jogador solitário) tentam afundar os navios do oponente (ou do próprio no modo solitário) antes de ter seus próprios navios afundados.\n\n");
@@ -1395,7 +1400,7 @@ int main() {
 								if (op5 != '0') {
 									printf(RED "Número Inválido" RESET);
 									sleep(1);
-									system("cls");
+									limparTela();
 									op3 = ' ';
 									goto voltarRegras3;
 								}
@@ -1412,7 +1417,7 @@ int main() {
 		} else {
 			printf(RED "\nNúmero Inválido" RESET);
 			sleep(1);
-			system("cls");
+			limparTela();
 			continue;
 		}
 	}
